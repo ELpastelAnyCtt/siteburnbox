@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BurnBox - Chat Anônimo e Seguro</title>
+    <title>BurnBox - Chat Anônimo e Seguro | Mensagens que se Autodestroem</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cor-primaria: #000000;
-            --cor-secundaria: #0a0a0a;
+            --cor-primaria: #0a0a0a;
+            --cor-secundaria: #111111;
             --cor-destaque: #FF4500;
-            --cor-destaque-hover: #CC3700;
+            --cor-destaque-hover: #FF6B35;
             --cor-texto: #ffffff;
             --cor-texto-secundario: #c0c0c0;
             --cor-borda: #222222;
-            --cor-card: #111111;
-            --sombra: 0 5px 15px rgba(0, 0, 0, 0.5);
+            --cor-card: #1a1a1a;
+            --cor-destaque-suave: rgba(255, 69, 0, 0.1);
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --sombra-destaque: 0 0 20px rgba(255, 69, 0, 0.3);
+            --gradiente: linear-gradient(135deg, var(--cor-destaque) 0%, #FF6B35 100%);
         }
 
         * {
@@ -24,6 +27,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -39,15 +46,17 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        /* Header Modernizado */
         header {
-            background-color: var(--cor-primaria);
-            padding: 20px 0;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid var(--cor-borda);
+            transition: all 0.3s ease;
         }
 
         .header-container {
@@ -60,13 +69,30 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 700;
-            color: var(--cor-destaque);
+            font-weight: 800;
+            color: var(--cor-texto);
             font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo-highlight {
+            color: var(--cor-destaque);
+            position: relative;
+        }
+
+        .logo-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradiente);
         }
 
         .logo i {
             font-size: 1.8rem;
+            color: var(--cor-destaque);
         }
 
         nav ul {
@@ -80,6 +106,22 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradiente);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
@@ -87,36 +129,52 @@
         }
 
         .btn-app {
-            background-color: var(--cor-destaque);
+            background: var(--gradiente);
             color: white;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: var(--sombra-destaque);
         }
 
         .btn-app:hover {
-            background-color: var(--cor-destaque-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 69, 0, 0.4);
         }
 
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--cor-texto);
         }
 
-        /* Hero Section */
+        /* Hero Section Modernizada */
         .hero {
-            padding: 150px 0 100px;
+            padding: 180px 0 120px;
             background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 69, 0, 0.1) 0%, transparent 50%);
         }
 
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
             line-height: 1.2;
+            font-weight: 800;
         }
 
         .hero p {
@@ -131,47 +189,52 @@
             gap: 15px;
             justify-content: center;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
-            background-color: var(--cor-destaque);
+            background: var(--gradiente);
             color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 15px 35px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: var(--sombra-destaque);
         }
 
         .btn-primary:hover {
-            background-color: var(--cor-destaque-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.4);
         }
 
         .btn-secondary {
             background-color: transparent;
             color: var(--cor-texto);
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 15px 35px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             border: 2px solid var(--cor-borda);
-            transition: border-color 0.3s;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-secondary:hover {
             border-color: var(--cor-destaque);
+            transform: translateY(-3px);
         }
 
-        /* Features Section */
+        /* Features Section Modernizada */
         .features {
             padding: 100px 0;
             background-color: var(--cor-secundaria);
+            position: relative;
         }
 
         .section-title {
@@ -182,12 +245,14 @@
         .section-title h2 {
             font-size: 2.5rem;
             margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .section-title p {
             color: var(--cor-texto-secundario);
             max-width: 600px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         .features-grid {
@@ -199,24 +264,44 @@
         .feature-card {
             background-color: var(--cor-card);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: var(--sombra);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            border: 1px solid var(--cor-borda);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradiente);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
 
         .feature-icon {
-            background-color: rgba(255, 69, 0, 0.1);
+            background-color: var(--cor-destaque-suave);
             width: 70px;
             height: 70px;
-            border-radius: 50%;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            background-color: rgba(255, 69, 0, 0.2);
         }
 
         .feature-icon i {
@@ -233,7 +318,7 @@
             color: var(--cor-texto-secundario);
         }
 
-        /* Security Section */
+        /* Security Section Modernizada */
         .security {
             padding: 100px 0;
             background-color: var(--cor-primaria);
@@ -252,11 +337,13 @@
         .security-text h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .security-text p {
             color: var(--cor-texto-secundario);
             margin-bottom: 30px;
+            font-size: 1.1rem;
         }
 
         .security-features {
@@ -278,15 +365,56 @@
         .security-image {
             flex: 1;
             text-align: center;
+            position: relative;
         }
 
         .security-image img {
             max-width: 100%;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: var(--sombra);
         }
 
-        /* Testimonials Section */
+        .security-visual {
+            background: linear-gradient(135deg, var(--cor-card) 0%, var(--cor-secundaria) 100%);
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .security-visual::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(from 0deg, transparent, var(--cor-destaque), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        .security-visual-inner {
+            position: absolute;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            background: var(--cor-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Testimonials Section Modernizada */
         .testimonials {
             padding: 100px 0;
             background-color: var(--cor-secundaria);
@@ -300,10 +428,11 @@
 
         .testimonial {
             background-color: var(--cor-card);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: 15px;
             box-shadow: var(--sombra);
             text-align: center;
+            border: 1px solid var(--cor-borda);
         }
 
         .testimonial-avatar {
@@ -311,7 +440,7 @@
             height: 80px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background-color: var(--cor-destaque);
+            background: var(--gradiente);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -323,10 +452,12 @@
             font-style: italic;
             margin-bottom: 20px;
             color: var(--cor-texto-secundario);
+            font-size: 1.1rem;
         }
 
         .testimonial-author {
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .testimonial-role {
@@ -354,7 +485,7 @@
             background-color: var(--cor-destaque);
         }
 
-        /* Founders Section */
+        /* Founders Section Modernizada */
         .founders {
             padding: 100px 0;
             background-color: var(--cor-primaria);
@@ -369,9 +500,16 @@
         .founder-card {
             background-color: var(--cor-card);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
             box-shadow: var(--sombra);
+            border: 1px solid var(--cor-borda);
+            transition: all 0.3s;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
 
         .founder-avatar {
@@ -379,21 +517,36 @@
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background-color: var(--cor-destaque);
+            background: var(--gradiente);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founder-avatar::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            top: -50%;
+            left: -50%;
         }
 
         .founder-card h3 {
             margin-bottom: 10px;
+            font-size: 1.3rem;
         }
 
         .founder-role {
             color: var(--cor-destaque);
             margin-bottom: 15px;
+            font-weight: 500;
         }
 
         .founder-bio {
@@ -415,9 +568,10 @@
 
         .founder-social a:hover {
             color: var(--cor-destaque);
+            transform: translateY(-3px);
         }
 
-        /* Donations Section */
+        /* Donations Section Modernizada */
         .donations {
             padding: 100px 0;
             background-color: var(--cor-secundaria);
@@ -432,6 +586,7 @@
         .donation-content p {
             color: var(--cor-texto-secundario);
             margin-bottom: 30px;
+            font-size: 1.1rem;
         }
 
         .crypto-options {
@@ -444,10 +599,17 @@
 
         .crypto-option {
             background-color: var(--cor-card);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 15px;
             width: 200px;
             box-shadow: var(--sombra);
+            border: 1px solid var(--cor-borda);
+            transition: all 0.3s;
+        }
+
+        .crypto-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         .crypto-icon {
@@ -459,19 +621,21 @@
         .crypto-address {
             background-color: var(--cor-primaria);
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 0.8rem;
             word-break: break-all;
             margin-top: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            border: 1px solid var(--cor-borda);
         }
 
         .crypto-address:hover {
-            background-color: rgba(255, 69, 0, 0.1);
+            background-color: var(--cor-destaque-suave);
+            border-color: var(--cor-destaque);
         }
 
-        /* FAQ Section */
+        /* FAQ Section Modernizada */
         .faq {
             padding: 100px 0;
             background-color: var(--cor-primaria);
@@ -483,20 +647,30 @@
         }
 
         .faq-item {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid var(--cor-borda);
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
+            background-color: var(--cor-card);
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--cor-destaque);
         }
 
         .faq-question {
             padding: 20px;
-            background-color: var(--cor-card);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255, 69, 0, 0.05);
         }
 
         .faq-question i {
@@ -512,7 +686,7 @@
         }
 
         .faq-item.active .faq-answer {
-            padding: 20px;
+            padding: 0 20px 20px;
             max-height: 500px;
         }
 
@@ -520,25 +694,39 @@
             transform: rotate(180deg);
         }
 
-        /* CTA Section */
+        /* CTA Section Modernizada */
         .cta {
             padding: 100px 0;
             background: linear-gradient(135deg, var(--cor-secundaria) 0%, var(--cor-primaria) 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 80%, rgba(255, 69, 0, 0.1) 0%, transparent 50%);
         }
 
         .cta h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .cta p {
             color: var(--cor-texto-secundario);
             max-width: 600px;
             margin: 0 auto 30px;
+            font-size: 1.1rem;
         }
 
-        /* Footer */
+        /* Footer Modernizado */
         footer {
             background-color: var(--cor-secundaria);
             padding: 60px 0 30px;
@@ -555,6 +743,18 @@
         .footer-column h3 {
             margin-bottom: 20px;
             font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--gradiente);
         }
 
         .footer-column ul {
@@ -582,6 +782,63 @@
             color: var(--cor-texto-secundario);
         }
 
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--cor-card);
+            z-index: 1001;
+            transition: right 0.4s ease;
+            padding: 80px 30px 30px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            border-left: 1px solid var(--cor-borda);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav a {
+            color: var(--cor-texto);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--cor-borda);
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--cor-destaque);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--cor-texto);
+            cursor: pointer;
+        }
+
+        .mobile-nav .btn-app {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .security-content {
@@ -590,6 +847,10 @@
             
             .security-image {
                 order: -1;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
             }
         }
 
@@ -603,7 +864,11 @@
             }
             
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
             }
             
             .hero-buttons {
@@ -614,6 +879,44 @@
             .security-features {
                 grid-template-columns: 1fr;
             }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .founder-card, .testimonial {
+                padding: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .crypto-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .crypto-option {
+                width: 100%;
+                max-width: 250px;
+            }
         }
     </style>
 </head>
@@ -621,10 +924,10 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <div class="logo">
+            <a href="#" class="logo">
                 <i class="fas fa-fire"></i>
-                <span>BurnBox</span>
-            </div>
+                <span>Burn<span class="logo-highlight">Box</span></span>
+            </a>
             <nav>
                 <ul>
                     <li><a href="#features">Funcionalidades</a></li>
@@ -640,6 +943,21 @@
             </div>
         </div>
     </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="close-menu">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul>
+            <li><a href="#features">Funcionalidades</a></li>
+            <li><a href="#security">Segurança</a></li>
+            <li><a href="#testimonials">Depoimentos</a></li>
+            <li><a href="#founders">Criadores</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a href="https://burn-box.vercel.app" class="btn-app">Acessar o App</a>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -742,9 +1060,12 @@
                     </div>
                 </div>
                 <div class="security-image">
-                    <!-- Imagem ilustrativa de segurança -->
-                    <div style="background-color: var(--cor-card); width: 100%; height: 300px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-lock" style="font-size: 5rem; color: var(--cor-destaque);"></i>
+                    <div class="security-visual">
+                        <div class="security-visual-inner">
+                            <i class="fas fa-lock" style="font-size: 4rem; color: var(--cor-destaque);"></i>
+                            <h3 style="color: var(--cor-texto);">Segurança Máxima</h3>
+                            <p style="color: var(--cor-texto-secundario); text-align: center;">Suas conversas estão protegidas com criptografia de última geração</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -788,7 +1109,7 @@
                     <div class="founder-avatar">
                         <i class="fas fa-user-tie"></i>
                     </div>
-                    <h3>Alexandre Silva</h3>
+                    <h3>Hevergley Pinheiro</h3>
                     <p class="founder-role">Fundador & Desenvolvedor</p>
                     <p class="founder-bio">Especialista em segurança digital e privacidade online com mais de 10 anos de experiência.</p>
                     <div class="founder-social">
@@ -856,7 +1177,7 @@
                             <i class="fas fa-coins"></i>
                         </div>
                         <h3>Litecoin (LTC)</h3>
-                        <div class="crypto-address">****************************</div>
+                        <div class="crypto-address">ltc1q3m7v8g5w5j0y8w6z5c4v9m3n2b1v0c9x8z7y6</div>
                     </div>
                 </div>
                 <p><small>Clique no endereço para copiar</small></p>
@@ -926,7 +1247,7 @@
         <div class="container">
             <h2>Pronto para experimentar?</h2>
             <p>Junte-se a milhares de usuários que já descobriram a liberdade de se comunicar com privacidade e segurança.</p>
-            <a href="#" class="btn-primary" style="font-size: 1.1rem; padding: 15px 40px;"><i class="fas fa-rocket"></i> Começar Agora - É Gratuito!</a>
+            <a href="https://burn-box.vercel.app" class="btn-primary" style="font-size: 1.1rem; padding: 15px 40px;"><i class="fas fa-rocket"></i> Começar Agora - É Gratuito!</a>
         </div>
     </section>
 
@@ -946,10 +1267,10 @@
                 <div class="footer-column">
                     <h3>Produto</h3>
                     <ul>
-                        <li><a href="#">Funcionalidades</a></li>
-                        <li><a href="#">Segurança</a></li>
+                        <li><a href="#features">Funcionalidades</a></li>
+                        <li><a href="#security">Segurança</a></li>
                         <li><a href="#">Preços (Sempre Gratuito)</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#faq">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -982,7 +1303,17 @@
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentNode;
-                item.classList.toggle('active');
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
             });
         });
 
@@ -1002,8 +1333,18 @@
 
         // Mobile Menu Toggle
         document.querySelector('.mobile-menu').addEventListener('click', () => {
-            document.querySelector('nav ul').style.display = 
-                document.querySelector('nav ul').style.display === 'flex' ? 'none' : 'flex';
+            document.getElementById('mobileNav').classList.add('active');
+        });
+
+        document.querySelector('.close-menu').addEventListener('click', () => {
+            document.getElementById('mobileNav').classList.remove('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileNav').classList.remove('active');
+            });
         });
 
         // Smooth Scrolling
@@ -1019,6 +1360,53 @@
                 }
             });
         });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.padding = '10px 0';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.9)';
+                header.style.padding = '15px 0';
+            }
+        });
+
+        // Testimonial slider (simple version)
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => {
+                testimonial.style.display = 'none';
+            });
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            testimonials[index].style.display = 'block';
+            dots[index].classList.add('active');
+            currentTestimonial = index;
+        }
+        
+        // Initialize first testimonial
+        showTestimonial(0);
+        
+        // Add click events to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTestimonial(index);
+            });
+        });
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+            let next = currentTestimonial + 1;
+            if (next >= testimonials.length) next = 0;
+            showTestimonial(next);
+        }, 5000);
     </script>
 </body>
 </html>
